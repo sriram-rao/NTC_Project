@@ -21,25 +21,26 @@ def modular_pow(base, exponent, modulus):
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(('localhost', 10002))
 server.listen(5)
-
 connection, address = server.accept()
-buff = connection.recv(1024)
-if len(buff) > 0:
-   p = int(buff.split(',')[0])
-   g =int(buff.split(',')[1])
-# print p
-# print g
 
-a = random.getrandbits(257) % p
-public = modular_pow(g, a, p)
+def dh_key_server():
+   buff = connection.recv(1024)
+   if len(buff) > 0:
+      p = int(buff.split(',')[0])
+      g =int(buff.split(',')[1])
+   # print p
+   # print g
+
+   a = random.getrandbits(257) % p
+   public = modular_pow(g, a, p)
 
 
 
-client_public = connection.recv(1024)
-client_public = int(client_public)
-# print client_public
+   client_public = connection.recv(1024)
+   client_public = int(client_public)
+   # print client_public
 
-connection.send(str(public))
+   connection.send(str(public))
 
-key = modular_pow(client_public, a, p)
-print key
+   key = modular_pow(client_public, a, p)
+   print key
