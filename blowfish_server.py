@@ -400,27 +400,3 @@ class Blowfish:
 
    def key_bits (self):
       return 56 * 8
-
-##############################################################
-# Module testing
-
-if __name__ == '__main__':
-   key = 'This is a test key'
-   cipher = Blowfish (key)
-
-   print "Testing encryption:"
-   xl = 123456
-   xr = 654321
-   print "\tPlain text: (%s, %s)" %(xl, xr)
-   cl, cr = cipher.cipher (xl, xr, cipher.ENCRYPT)
-   print "\tCrypted is: (%s, %s)" %(cl, cr)
-   dl, dr = cipher.cipher (cl, cr, cipher.DECRYPT)
-   print "\tUnencrypted is: (%s, %s)" %(dl, dr)
-
-   print "Testing buffer encrypt:"
-   text = 'testtesting'
-   print "\tText: %s" %text
-   crypted = cipher.encrypt (text)
-   print "\tEncrypted: %s" %crypted
-   decrypted = cipher.decrypt (crypted)
-   print "\tDecrypted: %s" %decrypted

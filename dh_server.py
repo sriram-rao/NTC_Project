@@ -8,7 +8,7 @@ import random
 #Compute key
 
 def modular_pow(base, exponent, modulus):
-    #Assert :: (modulus - 1) * (modulus - 1) does not overflow base
+
     result = 1
     base = base % modulus
     while (exponent > 0):
@@ -18,12 +18,7 @@ def modular_pow(base, exponent, modulus):
         base = (base * base) % modulus
     return result
 
-server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind(('localhost', 10002))
-server.listen(5)
-connection, address = server.accept()
-
-def dh_key_server():
+def dh_key_server(connection):
    buff = connection.recv(1024)
    if len(buff) > 0:
       p = int(buff.split(',')[0])
@@ -34,8 +29,6 @@ def dh_key_server():
    a = random.getrandbits(257) % p
    public = modular_pow(g, a, p)
 
-
-
    client_public = connection.recv(1024)
    client_public = int(client_public)
    # print client_public
@@ -43,4 +36,5 @@ def dh_key_server():
    connection.send(str(public))
 
    key = modular_pow(client_public, a, p)
-   print key
+   # print key
+   return key

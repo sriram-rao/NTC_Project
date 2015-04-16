@@ -10,7 +10,7 @@ import socket
 #Compute (g^Xb)^(Xa) as the key
 
 def modular_pow(base, exponent, modulus):
-    #Assert :: (modulus - 1) * (modulus - 1) does not overflow base
+
     result = 1
     base = base % modulus
     while (exponent > 0):
@@ -20,10 +20,7 @@ def modular_pow(base, exponent, modulus):
         base = (base * base) % modulus
     return result
 
-client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect(('localhost', 10002))
-
-def dh_key_client():
+def dh_key_client(client):
   p = 2**256 - 189
   g = random.getrandbits(257) % p
 
@@ -38,4 +35,5 @@ def dh_key_client():
   server_public = int(server_public)
 
   key = modular_pow(server_public, a, p)
-  print key
+  # print key
+  return key
